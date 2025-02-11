@@ -23,7 +23,17 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+      
 
+      - name: Install Chrome & ChromeDriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+          CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
+          curl -sSL https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION | xargs -I{} wget -q https://chromedriver.storage.googleapis.com/{}/chromedriver_linux64.zip
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          chmod +x /usr/local/bin/chromedriver
       - name: Build with Maven
         run: cd GitIntegration && mvn -B package --file pom.xml
 
