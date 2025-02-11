@@ -18,8 +18,8 @@ public class HeadlessSeleniumTest {
     @BeforeTest
     public void beforeTest() {
         // Use WebDriverManager to set up ChromeDriver automatically
-       // WebDriverManager.chromedriver().setup();
-    	System.setProperty("webdriver.chrome.driver", "C:/Users/swami/Downloads/chromedriver-win64/chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
+    	//System.setProperty("webdriver.chrome.driver", "C:/Users/swami/Downloads/chromedriver-win64/chromedriver.exe");
 
 
         // Set Chrome options
