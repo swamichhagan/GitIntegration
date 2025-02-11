@@ -24,7 +24,7 @@ public class HeadlessSeleniumTest {
 
         // Set Chrome options
         ChromeOptions options = new ChromeOptions();
-        // options.addArguments("--headless"); // Uncomment for headless mod
+         options.addArguments("--headless"); // Uncomment for headless mod
         options.addArguments("--disable-gpu");
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--remote-allow-origins=*");
