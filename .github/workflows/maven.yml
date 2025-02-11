@@ -34,6 +34,14 @@ jobs:
           unzip chromedriver_linux64.zip
           sudo mv chromedriver /usr/local/bin/
           chmod +x /usr/local/bin/chromedriver
+           google-chrome --version
+           chromedriver --version
+           - name: Debug Chrome & ChromeDriver
+           run: | echo "Google Chrome Version:"    
+           google-chrome --version
+           echo "ChromeDriver Version:"
+           chromedriver --version
+           which chromedriver
       - name: Build with Maven
         run: cd GitIntegration && mvn -B package --file pom.xml
 
