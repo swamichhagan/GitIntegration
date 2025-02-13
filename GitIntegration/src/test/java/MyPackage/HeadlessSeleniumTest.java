@@ -1,5 +1,9 @@
 package MyPackage;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,11 +16,15 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+
 public class HeadlessSeleniumTest {
+	
 
 	WebDriver driver;
+	static Properties properties;
+    
     @BeforeTest
-    public void beforeTest() {
+    public void beforeTest() throws IOException {
         // Use WebDriverManager to set up ChromeDriver automatically
         WebDriverManager.chromedriver().setup();
     	//System.setProperty("webdriver.chrome.driver", "C:/Users/swami/Downloads/chromedriver-win64/chromedriver.exe");
@@ -24,7 +32,7 @@ public class HeadlessSeleniumTest {
 
         // Set Chrome options
         ChromeOptions options = new ChromeOptions();
-         options.addArguments("--headless"); // Uncomment for headless mod
+        options.addArguments("--headless"); // Uncomment for headless mod
         options.addArguments("--disable-gpu");
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--remote-allow-origins=*");
@@ -32,14 +40,17 @@ public class HeadlessSeleniumTest {
         // Initialize WebDriver
          driver = new ChromeDriver(options);
 
-       
+         
+         properties = new Properties();
+         FileInputStream fileInputStream = new FileInputStream("C:/Users/swami/Downloads/configuration.properties");
+         properties.load(fileInputStream);
     }
     
     @Test
     public void loginTest() {
     	
-    	String userID = System.getenv("SELENIUM_USERNAME");
-        String pwd = System.getenv("SELENIUM_PASSWORD");
+    	String userID = getUser();
+        String pwd = getPassword();
         // Open the login page
         driver.get("https://practicetestautomation.com/practice-test-login/");
 
@@ -74,6 +85,15 @@ public class HeadlessSeleniumTest {
         if (driver != null) {
             driver.quit();
         }
+    }
 
-}
+        public static String getUser() {
+            // Read from GitHub Secrets if available, otherwise use local properties
+            return System.getenv("SELENIUM_USERNAME") != null ? System.getenv("SELENIUM_USERNAME") : properties.getProperty("loginID");
+        }
+
+        public String getPassword() {
+            return System.getenv("SELENIUM_PASSWORD") != null ? System.getenv("SELENIUM_PASSWORD") : properties.getProperty("loginPWD");
+        }
+
 }
