@@ -22,8 +22,15 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      
-
+          cache: 'maven'
+          
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            maven-
       - name: Install Chrome & ChromeDriver
         run: |
           
@@ -45,6 +52,6 @@ jobs:
           echo "SELENIUM_USERNAME=$SELENIUM_USERNAME" >> $GITHUB_ENV
           echo "SELENIUM_PASSWORD=$SELENIUM_PASSWORD" >> $GITHUB_ENV
       - name: Build with Maven
-        run: cd GitIntegration && mvn clean test -B package --file pom.xml
+        run: cd GitIntegration && mvn test -B package --file pom.xml
 
   
