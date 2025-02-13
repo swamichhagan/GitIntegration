@@ -37,26 +37,34 @@ public class HeadlessSeleniumTest {
     
     @Test
     public void loginTest() {
+    	
+    	String userID = System.getenv("SELENIUM_USERNAME");
+        String pwd = System.getenv("SELENIUM_PASSWORD");
         // Open the login page
         driver.get("https://practicetestautomation.com/practice-test-login/");
 
         // Find username field and enter value
         WebElement username = driver.findElement(By.id("username"));
-        username.sendKeys("student"); // Valid username
+       // username.sendKeys("student"); // Valid username
+        username.sendKeys(userID);
 
         // Find password field and enter value
         WebElement password = driver.findElement(By.id("password"));
-        password.sendKeys("Password123"); // Valid password
+        //password.sendKeys("Password123"); // Valid password
+        password.sendKeys(pwd); // Valid password
 
         // Click the login button
         WebElement loginButton = driver.findElement(By.id("submit"));
         loginButton.click();
+        
+        
 
         // Verify successful login
         WebElement successMessage = driver.findElement(By.xpath("//h1[contains(text(),'Logged In Successfully')]"));
         Assert.assertTrue(successMessage.isDisplayed(), "Login failed!");
 
         // Print success message
+        System.out.println("User ID & Password"+userID+":"+pwd);
         System.out.println("Login Successful! Page Title: " + driver.getTitle());
     }
 
