@@ -41,13 +41,10 @@ public class HeadlessSeleniumTest {
          driver = new ChromeDriver(options);
 
          
-         properties = new Properties();
-         FileInputStream fileInputStream = new FileInputStream("C:/Users/swami/Downloads/configuration.properties");
-         properties.load(fileInputStream);
     }
     
     @Test
-    public void loginTest() {
+    public void loginTest() throws IOException {
     	
     	String userID = getUser();
         String pwd = getPassword();
@@ -87,13 +84,36 @@ public class HeadlessSeleniumTest {
         }
     }
 
-        public static String getUser() {
-            // Read from GitHub Secrets if available, otherwise use local properties
-            return System.getenv("SELENIUM_USERNAME") != null ? System.getenv("SELENIUM_USERNAME") : properties.getProperty("loginID");
-        }
+        public static String getUser() throws IOException {
+        	
+        	if(isRunningOnGitHub())
+            { 
+              return System.getenv("SELENIUM_USERNAME");
+            }
+        	else
+        	{
+        		properties = new Properties();
+                FileInputStream fileInputStream = new FileInputStream("C:/Users/swami/Downloads/configuration.properties");
+                properties.load(fileInputStream);
+        	  return properties.getProperty("loginID");	
+        	}
+         }
 
-        public String getPassword() {
-            return System.getenv("SELENIUM_PASSWORD") != null ? System.getenv("SELENIUM_PASSWORD") : properties.getProperty("loginPWD");
+        public String getPassword() throws IOException {
+        	if(isRunningOnGitHub())
+            { 
+              return System.getenv("SELENIUM_PASSWORD");
+            }
+        	else
+        	{
+        		properties = new Properties();
+                FileInputStream fileInputStream = new FileInputStream("C:/Users/swami/Downloads/configuration.properties");
+                properties.load(fileInputStream);
+        	  return properties.getProperty("loginPWD");	
+        	}}
+        
+        public static boolean isRunningOnGitHub() {
+            return "true".equalsIgnoreCase(System.getenv("GITHUB_ACTIONS"));
         }
 
 }
