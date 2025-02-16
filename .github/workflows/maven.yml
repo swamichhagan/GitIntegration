@@ -98,3 +98,9 @@ jobs:
         with:
           name: Screenshots
           path: GitIntegration/test-output/screenshots/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.DEPLOY_KEY }}  # Add deploy key to secrets
+          publish_dir: GitIntegration/test-output  # Directory containing the report
