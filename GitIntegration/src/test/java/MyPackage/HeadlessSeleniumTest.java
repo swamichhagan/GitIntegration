@@ -97,7 +97,7 @@ public class HeadlessSeleniumTest {
 
     @AfterTest
     public void teardown() {
-        // Close the browser
+        // Close the browser 
         if (driver != null) {
             driver.quit();
         }
