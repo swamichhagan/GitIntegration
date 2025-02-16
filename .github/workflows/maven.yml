@@ -88,7 +88,7 @@ jobs:
           cd GitIntegration && mvn test -B package --file pom.xml
 
       - name: Upload Extent Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ExtentReport
           path: GitIntegration/test-output/ExtentReport.html
