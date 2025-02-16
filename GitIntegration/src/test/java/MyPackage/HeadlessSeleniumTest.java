@@ -42,8 +42,9 @@ public class HeadlessSeleniumTest {
 
         // Initialize WebDriver
          //driver = new ChromeDriver(options);
-        URL hubUrl = new URL("http://192.168.1.80:4444/wd/hub");
-         driver = new RemoteWebDriver(hubUrl,options);
+        //URL hubUrl = new URL("http://192.168.1.80:4444/wd/hub");
+        URL hubURL = new URL(getHubURL());
+         driver = new RemoteWebDriver(hubURL,options);
 
          
     }
@@ -53,6 +54,7 @@ public class HeadlessSeleniumTest {
     	
     	String userID = getUser();
         String pwd = getPassword();
+        
         // Open the login page
         driver.get("https://practicetestautomation.com/practice-test-login/");
 
@@ -116,6 +118,18 @@ public class HeadlessSeleniumTest {
                 properties.load(fileInputStream);
         	  return properties.getProperty("loginPWD");	
         	}}
+        
+        public String getHubURL() throws IOException {
+        	if(isRunningOnGitHub())
+            { 
+              return System.getenv("SELENIUM_GRID_URL");
+            }
+        	else
+        	{	
+        	  return "http://localhost:4444/wd/hub";	
+        	}}
+        
+        
         
         public static boolean isRunningOnGitHub() {
             return "true".equalsIgnoreCase(System.getenv("GITHUB_ACTIONS"));
