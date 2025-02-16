@@ -13,7 +13,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+services:
+      selenium:
+        image: selenium/standalone-chrome
+        ports:
+          - 4444:4444
     steps:
       - uses: actions/checkout@v4
 
@@ -23,6 +27,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: 'maven'
+		  
+	  - name: Wait for Selenium Grid
+      run: sleep 10
+	  
+	  - name: Set Selenium Grid URL  
+      run: echo "SELENIUM_GRID_URL=http://localhost:4444/wd/hub" >> $GITHUB_ENV
           
       - name: Cache Maven dependencies
         uses: actions/cache@v3
