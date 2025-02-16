@@ -6,6 +6,15 @@ on:
   pull_request:
     branches: [ "master" ]
   workflow_dispatch:
+    inputs:
+      test_env:
+        description: "Test Environment (e.g., dev, staging, prod)"
+        required: true
+        default: "qa"
+      browser:
+        description: "Browser to run tests (chrome/firefox)"
+        required: true
+        default: "chrome"
 
 jobs:
   build:
