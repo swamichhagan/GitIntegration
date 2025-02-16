@@ -19,12 +19,20 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+
+import Configuration.ExtentManager;
+
 
 public class HeadlessSeleniumTest {
 	
 
 	WebDriver driver;
 	static Properties properties;
+	ExtentReports extent;
+	ExtentTest test;
     
     @BeforeTest
     public void beforeTest() throws IOException {
@@ -45,6 +53,8 @@ public class HeadlessSeleniumTest {
         //URL hubUrl = new URL("http://192.168.1.80:4444/wd/hub");
         URL hubURL = new URL(getHubURL());
          driver = new RemoteWebDriver(hubURL,options);
+          extent = ExtentManager.getInstance();
+          test = extent.createTest("Verify Google Title");
 
          
     }
@@ -57,6 +67,7 @@ public class HeadlessSeleniumTest {
         
         // Open the login page
         driver.get("https://practicetestautomation.com/practice-test-login/");
+        test.log(Status.INFO, "Launching Google");
 
         // Find username field and enter value
         WebElement username = driver.findElement(By.id("username"));
@@ -81,6 +92,7 @@ public class HeadlessSeleniumTest {
         // Print success message
         System.out.println("User ID & Password"+userID+":"+pwd);
         System.out.println("Login Successful! Page Title: " + driver.getTitle());
+        test.pass("Test Passed Successfully");
     }
 
     @AfterTest
@@ -89,6 +101,8 @@ public class HeadlessSeleniumTest {
         if (driver != null) {
             driver.quit();
         }
+        test.log(Status.INFO, "Browser Closed");
+        extent.flush();  // Save the report
     }
 
         public static String getUser() throws IOException {
