@@ -15,7 +15,7 @@ services:
         image: selenium/standalone-chrome
         ports:
           - 4444:4444
-    steps:
+steps:
       - uses: actions/checkout@v4
 
       - name: Set up JDK 17
