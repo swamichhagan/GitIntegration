@@ -2,6 +2,7 @@ package MyPackage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 
 import org.openqa.selenium.By;
@@ -9,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 import org.testng.Assert;
@@ -32,13 +35,15 @@ public class HeadlessSeleniumTest {
 
         // Set Chrome options
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless"); // Uncomment for headless mod
+        //options.addArguments("--headless"); // Uncomment for headless mod
         options.addArguments("--disable-gpu");
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--remote-allow-origins=*");
 
         // Initialize WebDriver
-         driver = new ChromeDriver(options);
+         //driver = new ChromeDriver(options);
+        URL hubUrl = new URL("http://192.168.1.80:4444/wd/hub");
+         driver = new RemoteWebDriver(hubUrl,options);
 
          
     }
