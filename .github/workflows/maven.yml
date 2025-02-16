@@ -87,10 +87,14 @@ jobs:
         run: |
           cd GitIntegration && mvn test -B package --file pom.xml
 
-      - name: Upload Extent Report and Screenshots
+      - name: Upload Extent Report
         uses: actions/upload-artifact@v4
         with:
-          name: ExtentReportAndScreenshots
-          path: |
-            GitIntegration/test-output/ExtentReport.html
-            GitIntegration/test-output/screenshots/
+          name: ExtentReport
+          path: GitIntegration/test-output/ExtentReport.html
+
+      - name: Upload Screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: Screenshots
+          path: GitIntegration/test-output/screenshots/
