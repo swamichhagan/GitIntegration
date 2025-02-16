@@ -11,10 +11,20 @@ on:
         description: "Test Environment (e.g., dev, staging, prod)"
         required: true
         default: "qa"
+        type: choice
+        options:
+          - dev
+          - qa
+          - stage
       browser:
         description: "Browser to run tests (chrome/firefox)"
         required: true
         default: "chrome"
+        type: choice
+        options:
+          - chrome
+          - EDGE
+          - headless
 
 jobs:
   build:
