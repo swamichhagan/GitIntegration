@@ -50,8 +50,7 @@ jobs:
       - name: Wait for Selenium Grid
         run: sleep 10
 
-      - name: Set Selenium Grid URL  
-        run: echo "SELENIUM_GRID_URL=http://localhost:4444/wd/hub" >> $GITHUB_ENV
+     
           
       - name: Cache Maven Dependencies
         uses: actions/cache@v3
