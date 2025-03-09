@@ -7,6 +7,8 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 import org.openqa.selenium.By;
@@ -145,7 +147,9 @@ public class HeadlessSeleniumTest {
 
         // Define the directory and file path where the screenshot will be saved
         String destDir = System.getProperty("user.dir") + "/test-output/screenshots/";
-        Path destinationPath = Paths.get(destDir + screenshotName + ".png");
+        String timestamp = new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date());
+        String screenshotName1 = "screenshot_" + timestamp + ".png";
+        Path destinationPath = Paths.get(destDir + screenshotName1);
 
         // Create directories if they don't exist
         Files.createDirectories(destinationPath.getParent());
