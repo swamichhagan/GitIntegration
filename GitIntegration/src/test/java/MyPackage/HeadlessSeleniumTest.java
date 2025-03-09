@@ -125,11 +125,13 @@ public class HeadlessSeleniumTest {
     }
 
     public String getHubURL() throws IOException {
-        if (isRunningOnGitHub()) {
+        /*if (isRunningOnGitHub()) {
             return System.getenv("SELENIUM_GRID_URL");
         } else {
             return "http://localhost:4444/wd/hub";
-        }
+        }*/
+        
+         return "http://localhost:4444/wd/hub";
     }
 
     public static boolean isRunningOnGitHub() {
@@ -142,7 +144,7 @@ public class HeadlessSeleniumTest {
         File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
         // Define the directory and file path where the screenshot will be saved
-        String destDir = "screenshots/";
+        String destDir = System.getProperty("user.dir") + "/test-output/screenshots/";
         Path destinationPath = Paths.get(destDir + screenshotName + ".png");
 
         // Create directories if they don't exist
