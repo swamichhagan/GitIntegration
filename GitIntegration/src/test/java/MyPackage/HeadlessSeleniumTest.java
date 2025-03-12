@@ -86,7 +86,7 @@ public class HeadlessSeleniumTest {
 
         // Capture screenshot after successful login
         String screenshotPath = captureScreenshot("successfulLogin");
-        test.pass("Login Successful", MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        test.addScreenCaptureFromBase64String(screenshotPath, "Login Successfull");
 
         // Print success message
         System.out.println("User ID & Password" + userID + ":" + pwd);
@@ -107,12 +107,12 @@ public class HeadlessSeleniumTest {
     public static String getUser() throws IOException {
         if (isRunningOnGitHub()) {
             return System.getenv("SELENIUM_USERNAME");
-        } else {
+        } else {  
             properties = new Properties();
             FileInputStream fileInputStream = new FileInputStream("C:/Users/swami/Downloads/configuration.properties");
             properties.load(fileInputStream);
             return properties.getProperty("loginID");
-        }
+        }    
     }
 
     public String getPassword() throws IOException {
@@ -143,22 +143,9 @@ public class HeadlessSeleniumTest {
     // Method to capture screenshot and save it to a file
     private String captureScreenshot(String screenshotName) throws IOException {
         // Capture screenshot
-        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+    	String base64Screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
 
-        // Define the directory and file path where the screenshot will be saved
-        String destDir = System.getProperty("user.dir") + "/test-output/screenshots/";
-        String timestamp = new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date());
-        String screenshotName1 = "screenshot_" + timestamp + ".png";
-        Path destinationPath = Paths.get(destDir + screenshotName1);
-
-        // Create directories if they don't exist
-        Files.createDirectories(destinationPath.getParent());
-
-        // Copy the screenshot to the desired location
-        File destFile = destinationPath.toFile();
-        Files.copy(srcFile.toPath(), destFile.toPath());
-
-        // Return the absolute path of the screenshot
-        return destFile.getAbsolutePath();
+       
+        return base64Screenshot;
     }
 }
