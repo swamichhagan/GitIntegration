@@ -145,7 +145,7 @@ public class HeadlessSeleniumTest {
         // Capture screenshot
     	String base64Screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
 
-       
+    	System.out.println("Captured Screenshot (Base64 Length): " + base64Screenshot.length()); // Debugging
         return base64Screenshot;
     }
 }
