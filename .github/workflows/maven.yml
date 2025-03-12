@@ -8,23 +8,15 @@ on:
   workflow_dispatch:
     inputs:
       test_env:
-        description: "Test Environment (e.g., dev, staging, prod)"
+        description: "Test Environment"
         required: true
-        default: "qa"
+        default: "QA"
         type: choice
         options:
-          - dev
-          - qa
-          - stage
-      browser:
-        description: "Browser to run tests (chrome/firefox)"
-        required: true
-        default: "chrome"
-        type: choice
-        options:
-          - chrome
-          - EDGE
-          - headless
+          - DEV
+          - QA
+          - UAT
+          - PERF
 
 jobs:
   build:
@@ -91,15 +83,3 @@ jobs:
         with:
           name: ExtentReport
           path: GitIntegration/test-output/ExtentReport.html
-
-      - name: Upload Screenshots
-        uses: actions/upload-artifact@v4
-        with:
-          name: Screenshots
-          path: GitIntegration/test-output/screenshots/
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          deploy_key: ${{ secrets.DEPLOY_KEY }}  # Add deploy key to secrets
-          publish_dir: GitIntegration/test-output  # Directory containing the report
