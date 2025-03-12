@@ -42,8 +42,6 @@ jobs:
       - name: Wait for Selenium Grid
         run: sleep 10
 
-     
-          
       - name: Cache Maven Dependencies
         uses: actions/cache@v3
         with:
@@ -78,8 +76,12 @@ jobs:
         run: |
           cd GitIntegration && mvn test -B package --file pom.xml
 
-      - name: Upload Extent Report
+      - name: Find Latest Extent Report
+        id: find_report
+        run: echo "LATEST_REPORT=$(ls -t GitIntegration/test-output/ExtentReport_*.html | head -n 1)" >> $GITHUB_ENV
+
+      - name: Upload Latest Extent Report
         uses: actions/upload-artifact@v4
         with:
-          name: ExtentReport
-          path: GitIntegration/test-output/ExtentReport.html
+          name: Extent_Report
+          path: ${{ env.LATEST_REPORT }}
