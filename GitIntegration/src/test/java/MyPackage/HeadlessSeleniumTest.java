@@ -92,6 +92,9 @@ public class HeadlessSeleniumTest {
         System.out.println("User ID & Password" + userID + ":" + pwd);
         System.out.println("Login Successful! Page Title: " + driver.getTitle());
         test.pass("Test Passed Successfully");
+     // Print success message
+        System.out.println("ENV IS:" + getEnv());
+        
     }
 
     @AfterTest
@@ -114,6 +117,15 @@ public class HeadlessSeleniumTest {
             return properties.getProperty("loginID");
         }    
     }
+    
+    public static String getEnv() throws IOException {
+        if (isRunningOnGitHub()) {
+            return System.getenv("TEST_ENV");
+        } else {  
+            
+            return "STAGE";
+        }    
+    }
 
     public String getPassword() throws IOException {
         if (isRunningOnGitHub()) {
@@ -127,7 +139,7 @@ public class HeadlessSeleniumTest {
     }
 
     public String getHubURL() throws IOException {
-        /*if (isRunningOnGitHub()) {
+        /*if (isRunningOnGitHub()) {     
             return System.getenv("SELENIUM_GRID_URL");
         } else {
             return "http://localhost:4444/wd/hub";
