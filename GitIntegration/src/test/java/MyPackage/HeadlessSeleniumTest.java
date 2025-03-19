@@ -93,8 +93,15 @@ public class HeadlessSeleniumTest {
         System.out.println("Login Successful! Page Title: " + driver.getTitle());
         test.pass("Test Passed Successfully");
      // Print success message
-        System.out.println("ENV IS:" + getEnv());
         
+        if(getEnv().equalsIgnoreCase("QA"))
+        		{
+        	System.out.println("ENV matched:" );
+        		}
+        else
+        {
+        	System.out.println("ENV not matched");
+        }
     }
 
     @AfterTest
