@@ -68,9 +68,7 @@ jobs:
         env:
           SELENIUM_USERNAME: ${{ secrets.USER_ID }}
           SELENIUM_PASSWORD: ${{ secrets.PWD }}
-        run: |          
-          echo "SELENIUM_USERNAME=$SELENIUM_USERNAME" >> $GITHUB_ENV
-          echo "SELENIUM_PASSWORD=$SELENIUM_PASSWORD" >> $GITHUB_ENV
+        
 
       - name: Build with Maven
         run: |
